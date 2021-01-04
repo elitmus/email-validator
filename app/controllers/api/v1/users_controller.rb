@@ -55,8 +55,6 @@ class Api::V1::UsersController < ApplicationController
     user = User.find_by(email: params[:email])
     if user && User.authenticate(user.password, params[:password])
       token=find_token(user)
-      puts token
-      puts user.id
       copy_user = user.slice(:id, :name, :email, :username, :has_role, :is_activated)
       render json: { user: copy_user, jwt: token }, status: :ok
     else
