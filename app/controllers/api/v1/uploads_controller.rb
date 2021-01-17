@@ -1,5 +1,14 @@
 class Api::V1::UploadsController < ApplicationController
   def index
+    user = User.find(params[:userid])
+    if user.valid?
+      attachments = user.attachments
+      render json: attachments.map { |attachment|
+        attachment.as_json.merge({ file_name: attachment.csv_file.filename.to_s })
+      }
+    else
+      render json: { error: true, message: "You are not authorize person" }, status: :unauthorized
+    end
   end
 
   def create
@@ -9,9 +18,9 @@ class Api::V1::UploadsController < ApplicationController
       user_id = params[:userid]
       attachment = Attachment.create(user_id: user_id, csv_file: original_file, processed: false)
       ExportWorker.perform_async(attachment.id)
-      render json: { error: false, message: "File is processing" }
+      render json: { error: false, message: "Processing Your File.." }
     else
-      render json: { error: true, message: "File format not supported. Please upload CSV file." }, status: :not_acceptable
+      render json: { error: true, message: "File format not supported. Please upload CSV file!" }, status: :not_acceptable
     end
   end
 end
