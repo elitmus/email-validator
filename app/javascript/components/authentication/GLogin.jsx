@@ -68,11 +68,12 @@ const GLogin = (props) => {
   return (
     <div className='text-center text-dark mb-4'>
       <GoogleLogin
-        clientId={clientId}
-        buttonText='Sign In with Google'
-        onSuccess={onSuccess}
-        onFailure={onFailure}
-        cookiePolicy={"single_host_origin"}
+        clientId = { clientId }
+        buttonText = 'Sign In with Google'
+        onSuccess = { onSuccess }
+        onFailure = { onFailure }
+        cookiePolicy = { 'single_host_origin' }
+        hostedDomain = { 'elitmus.com' }
       >
         {!showSpinner ? (
           <span>Login With Google</span>

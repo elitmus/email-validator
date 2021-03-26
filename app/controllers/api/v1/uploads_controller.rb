@@ -10,7 +10,7 @@ class Api::V1::UploadsController < ApplicationController
   def create
     original_file = params[:csv_file]
     file_type = original_file.content_type
-    if file_type == "text/csv"
+    if ['text/csv', 'text/x-csv', 'application/csv', 'application/x-csv', 'text/comma-separated-values', 'text/x-comma-separated-values', 'application/vnd.ms-excel', 'text/plain'].include? file_type
       user_id = params[:userid]
       attachment = Attachment.create(user_id: user_id, csv_file: original_file, processed: false)
       ExportWorker.perform_async(attachment.id)

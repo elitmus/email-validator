@@ -22,7 +22,7 @@ class Api::V1::UsersController < ApplicationController
           copy_user = user.slice(:id, :name, :email, :username, :has_role, :is_activated)
           render json: { user: copy_user, jwt: token }, status: :ok
         else
-          user=User.create(name: params[:name],email: params[:email], password: params[:password], username: params[:username], has_role:'user', is_activated: false)
+          user=User.create(name: params[:name],email: params[:email], password: params[:password], username: params[:username], has_role:'user', is_activated: true)
           if user.valid?
             token=find_token(user)
             copy_user = user.slice(:id, :name, :email, :username, :has_role, :is_activated)

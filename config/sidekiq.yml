@@ -1,4 +1,5 @@
 ---
 :pidfile: tmp/pids/sidekiq_mcheck.pid
+:concurrency: 1
 :queues:
-  - [default, 5]
+  - default
